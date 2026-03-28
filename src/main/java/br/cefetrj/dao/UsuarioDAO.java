@@ -2,8 +2,11 @@ package br.cefetrj.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+
 
 import br.cefetrj.dao.utils.ConnectionFactory;
 import br.cefetrj.model.Usuario;
@@ -35,25 +38,33 @@ public class UsuarioDAO {
         return null;
     }
 
-     public boolean cadastrarUsuario(Usuario usuario) throws SQLException {
+     public Usuario cadastrarUsuario(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuario (nome, email, senha, perfil) VALUES (?, ?, ?, ?)";
 
         Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        
-        try  {
+        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
+        try {
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getSenha());
             stmt.setString(4, usuario.getPerfil());
 
-            int linhas = stmt.executeUpdate();
-            return linhas > 0;
+            stmt.executeUpdate();
+
+            // 🔥 AQUI ACONTECE A MÁGICA
+            ResultSet rs = stmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                usuario.setId(rs.getLong(1));
+            }
+
+            return usuario;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+
+        return null;
     }
 }

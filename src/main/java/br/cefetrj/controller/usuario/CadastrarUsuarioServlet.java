@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 @WebServlet("/cadastrar")
@@ -16,15 +18,29 @@ public class CadastrarUsuarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Pega o supervisor logado da sessão
-        Usuario supervisor = (Usuario) request.getSession().getAttribute("usuarioLogado");
+         //BLOCO DE SEGURANÇA
+        HttpSession session = request.getSession(false);
+
+        if (session == null || session.getAttribute("usuarioLogado") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
+
+        if (!"SUPERVISOR FINANCEIRO".equals(usuarioLogado.getPerfil())) {
+            response.sendRedirect("erro.jsp");
+            return;
+        }
+
+    
 
         // Cria novo usuário
         Usuario novoUsuario = new Usuario();
         novoUsuario.setNome(request.getParameter("nome"));
         novoUsuario.setEmail(request.getParameter("email"));
         novoUsuario.setSenha(request.getParameter("senha"));
-        novoUsuario.setPerfil("CLIENTE"); // por exemplo
+        novoUsuario.setPerfil(request.getParameter("perfil"));
 
         // Chama o service para cadastrar
         UsuarioService service = new UsuarioService();
