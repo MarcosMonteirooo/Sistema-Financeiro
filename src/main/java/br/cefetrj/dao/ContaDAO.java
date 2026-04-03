@@ -7,15 +7,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.text.html.parser.Entity;
+
 import java.math.BigDecimal;
 
 import br.cefetrj.dao.utils.ConnectionFactory;
+import br.cefetrj.dao.utils.HibernateUtil;
 import br.cefetrj.model.Conta;
+import jakarta.persistence.EntityManager;
 
 public class ContaDAO {
 
     public boolean cadastrarConta(Conta conta) throws SQLException {
-        String sql = "INSERT INTO conta (descricao, valor, vencimento, fornecedor_id, plano_de_contas_id) VALUES (?, ?, ?, ?, ?)";
+
+        /*String sql = "INSERT INTO conta (descricao, valor, vencimento, fornecedor_id, plano_de_contas_id) VALUES (?, ?, ?, ?, ?)";
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -34,11 +40,26 @@ public class ContaDAO {
             e.printStackTrace();
         }
 
+        return false;*/
+
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(conta);
+            entityManager.getTransaction().commit();
+        }catch (Exception e){
+            if (entityManager.getTransaction().isActive())
+                entityManager.getTransaction().rollback();
+                e.printStackTrace();
+        }
         return false;
+
     }
 
+
     public List<Conta> listarContas() throws SQLException {
-        String sql = """
+        /*String sql = """
             SELECT c.id, c.descricao, c.valor, c.vencimento,
                    c.fornecedor_id, c.plano_de_contas_id,
                    f.nome AS nome_fornecedor,
@@ -75,11 +96,15 @@ public class ContaDAO {
             e.printStackTrace();
         }
 
-        return listaContas;
+        return listaContas;*/
+
+        try (EntityManager entityManager = HibernateUtil.getEntityManager()){
+            return entityManager.createQuery("from Conta", Conta.class).getResultList();
+        }
     }
 
     public Conta buscarContaPorId(Long id) throws SQLException {
-        String sql = """
+        /*String sql = """
             SELECT c.id, c.descricao, c.valor, c.vencimento,
                    c.fornecedor_id, c.plano_de_contas_id
             FROM conta c
@@ -108,11 +133,16 @@ public class ContaDAO {
             e.printStackTrace();
         }
 
-        return null;
+        return null;*/
+
+        try(EntityManager entityManager = HibernateUtil.getEntityManager()){
+            return entityManager.find(Conta.class, id);
+        }
     }
 
     public boolean atualizarConta(Conta conta) throws SQLException {
-        String sql = "UPDATE conta SET descricao = ?, valor = ?, vencimento = ?, fornecedor_id = ?, plano_de_contas_id = ? WHERE id = ?";
+
+        /*String sql = "UPDATE conta SET descricao = ?, valor = ?, vencimento = ?, fornecedor_id = ?, plano_de_contas_id = ? WHERE id = ?";
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -132,11 +162,18 @@ public class ContaDAO {
             e.printStackTrace();
         }
 
+        return false;*/
+
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.getTransaction().commit();
         return false;
+
     }
 
     public boolean excluirConta(Long id) throws SQLException {
-        String sql = "DELETE FROM conta WHERE id = ?";
+
+        /*String sql = "DELETE FROM conta WHERE id = ?";
 
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -150,6 +187,18 @@ public class ContaDAO {
             e.printStackTrace();
         }
 
+        return false;*/
+
+        EntityManager entityManager = HibernateUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        Conta conta = entityManager.find(Conta.class, id);
+        if (conta !=  null){
+            entityManager.remove(conta);
+            return true;
+        } 
+        entityManager.getTransaction().commit();
         return false;
     }
+        
+        
 }

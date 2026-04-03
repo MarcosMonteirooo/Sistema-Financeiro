@@ -1,5 +1,10 @@
 package br.cefetrj.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "operador_financeiro")
 public class OperadorFinanceiro extends Usuario {
     
     //Contrutor 

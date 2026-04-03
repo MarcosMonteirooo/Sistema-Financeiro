@@ -19,7 +19,16 @@
     <maven.compiler.target>21</maven.compiler.target>
   </properties>
 
+
+
   <dependencies>
+
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>7.1.2.Final</version>
+    </dependency>
+
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>

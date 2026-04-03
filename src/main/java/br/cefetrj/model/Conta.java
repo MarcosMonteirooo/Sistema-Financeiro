@@ -3,8 +3,18 @@ package br.cefetrj.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-public class Conta {
-    private Long id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "conta")
+public class Conta extends EntidadeGenerica{
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private String descricao;
     private BigDecimal valor;
     private Date vencimento;
@@ -20,7 +30,7 @@ public class Conta {
 
     public Conta(Long id, String descricao, BigDecimal valor, Date vencimento,
                  Long fornecedorId, Long planoDeContasId) {
-        this.id = id;
+        super(id);
         this.descricao = descricao;
         this.valor = valor;
         this.vencimento = vencimento;
