@@ -38,7 +38,7 @@ public class ExcluirFornecedorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/listar_fornecedores");
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_fornecedores");
         }

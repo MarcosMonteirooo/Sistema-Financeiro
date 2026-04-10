@@ -39,7 +39,7 @@ public class AtualizarUsuarioServlet extends HttpServlet {
             request.setAttribute("usuarioEditar", usuario);
             request.getRequestDispatcher("/usuario/editarUsuario.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_usuarios");
         }
@@ -75,7 +75,7 @@ public class AtualizarUsuarioServlet extends HttpServlet {
             service.atualizarUsuario(usuario, usuarioLogado);
             response.sendRedirect(request.getContextPath() + "/listar_usuarios");
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_usuarios");
         }

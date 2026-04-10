@@ -40,7 +40,7 @@ public class ListarFornecedorServlet extends HttpServlet {
             request.setAttribute("listaFornecedores", listaFornecedores);
             request.getRequestDispatcher("/fornecedor/listarFornecedores.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/home.jsp");
         }

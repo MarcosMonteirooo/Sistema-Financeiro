@@ -1,6 +1,6 @@
 package br.cefetrj.service;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import br.cefetrj.dao.ContaDAO;
@@ -9,53 +9,53 @@ import br.cefetrj.model.Usuario;
 
 public class ContaService {
 
-    public boolean cadastrarConta(Conta conta, Usuario usuarioLogado) throws SQLException {
-        ContaDAO dao = new ContaDAO();
+    public boolean cadastrarConta(Conta conta, Usuario usuarioLogado) {
+    ContaDAO dao = new ContaDAO();
 
-        if (usuarioLogado == null) {
-            return false;
-        }
-
-        return dao.cadastrarConta(conta);
+    if (usuarioLogado == null) {
+        return false;
     }
 
-    public List<Conta> listarContas(Usuario usuarioLogado) throws SQLException {
+    return dao.salvar(conta);
+}
+
+    public List<Conta> listarContas(Usuario usuarioLogado)  {
         ContaDAO dao = new ContaDAO();
 
         if (usuarioLogado == null) {
             return null;
         }
 
-        return dao.listarContas();
+        return dao.listarTodos();
     }
 
-    public Conta buscarContaPorId(Long id, Usuario usuarioLogado) throws SQLException {
+    public Conta buscarContaPorId(Long id, Usuario usuarioLogado) {
         ContaDAO dao = new ContaDAO();
 
         if (usuarioLogado == null) {
             return null;
         }
 
-        return dao.buscarContaPorId(id);
+        return dao.buscarPorId(id);
     }
 
-    public boolean atualizarConta(Conta conta, Usuario usuarioLogado) throws SQLException {
+    public boolean atualizarConta(Conta conta, Usuario usuarioLogado) {
         ContaDAO dao = new ContaDAO();
 
         if (usuarioLogado == null) {
             return false;
         }
 
-        return dao.atualizarConta(conta);
+        return dao.atualizar(conta);
     }
 
-    public boolean excluirConta(Long id, Usuario usuarioLogado) throws SQLException {
+    public boolean excluirConta(Long id, Usuario usuarioLogado)  {
         ContaDAO dao = new ContaDAO();
 
         if (usuarioLogado == null) {
             return false;
         }
 
-        return dao.excluirConta(id);
+        return dao.deletar(id);
     }
 }

@@ -32,7 +32,7 @@ public class ExcluirUsuarioServlet extends HttpServlet {
             service.excluirUsuario(id, usuarioLogado);
             response.sendRedirect(request.getContextPath() + "/listar_usuarios");
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_usuarios");
         }

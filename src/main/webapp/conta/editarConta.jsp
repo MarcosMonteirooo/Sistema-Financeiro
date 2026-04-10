@@ -34,13 +34,13 @@
         <input type="date" name="vencimento" value="<%= conta.getVencimento() %>" required>
         <br><br>
 
-        <label>Fornecedor:</label><br>
+       <label>Fornecedor:</label><br>
         <select name="fornecedorId" required>
             <%
                 for (Fornecedor fornecedor : listaFornecedores) {
             %>
                 <option value="<%= fornecedor.getId() %>"
-                    <%= fornecedor.getId().equals(conta.getFornecedorId()) ? "selected" : "" %>>
+                    <%= (conta.getFornecedor() != null && fornecedor.getId().equals(conta.getFornecedor().getId())) ? "selected" : "" %>>
                     <%= fornecedor.getNome() %>
                 </option>
             <%
@@ -55,20 +55,20 @@
                 for (PlanoDeContas plano : listaPlanos) {
             %>
                 <option value="<%= plano.getId() %>"
-                    <%= plano.getId().equals(conta.getPlanoDeContasId()) ? "selected" : "" %>>
+                    <%= (conta.getPlanoDeContas() != null && plano.getId().equals(conta.getPlanoDeContas().getId())) ? "selected" : "" %>>
                     <%= plano.getNome() %>
                 </option>
             <%
                 }
             %>
         </select>
-        <br><br>
+                <br><br>
 
-        <button type="submit">Salvar</button>
-    </form>
+                <button type="submit">Salvar</button>
+            </form>
 
-    <br>
-    <a href="<%= request.getContextPath() %>/listar_contas">Voltar</a>
+            <br>
+            <a href="<%= request.getContextPath() %>/listar_contas">Voltar</a>
 
 </body>
 </html>

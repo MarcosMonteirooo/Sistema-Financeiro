@@ -32,7 +32,7 @@ public class ExcluirPlanoDeContasServlet extends HttpServlet {
             service.excluirPlano(id, usuarioLogado);
             response.sendRedirect(request.getContextPath() + "/listar_planos");
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_planos");
         }

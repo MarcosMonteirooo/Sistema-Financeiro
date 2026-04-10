@@ -34,7 +34,7 @@ public class ListarContaServlet extends HttpServlet {
             request.setAttribute("listaContas", listaContas);
             request.getRequestDispatcher("/conta/listarContas.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/home.jsp");
         }

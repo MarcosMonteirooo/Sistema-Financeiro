@@ -1,6 +1,6 @@
 package br.cefetrj.service;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import br.cefetrj.dao.FornecedorDAO;
@@ -9,7 +9,7 @@ import br.cefetrj.model.Usuario;
 
 public class FornecedorService {
 
-    public boolean cadastrarFornecedor(Fornecedor fornecedor, Usuario usuarioLogado) throws SQLException {
+    public boolean cadastrarFornecedor(Fornecedor fornecedor, Usuario usuarioLogado) {
         FornecedorDAO dao = new FornecedorDAO();
 
         if (usuarioLogado == null) {
@@ -20,10 +20,10 @@ public class FornecedorService {
             return false;
         }
 
-        return dao.cadastrarFornecedor(fornecedor);
+        return dao.salvar(fornecedor);
     }
 
-    public List<Fornecedor> listarFornecedores(Usuario usuarioLogado) throws SQLException {
+    public List<Fornecedor> listarFornecedores(Usuario usuarioLogado) {
         FornecedorDAO dao = new FornecedorDAO();
 
         if (usuarioLogado == null) {
@@ -34,10 +34,10 @@ public class FornecedorService {
             return null;
         }
 
-        return dao.listarFornecedores();
+        return dao.listarTodos();
     }
 
-    public Fornecedor buscarFornecedorPorId(Long id, Usuario usuarioLogado) throws SQLException {
+    public Fornecedor buscarFornecedorPorId(Long id, Usuario usuarioLogado)  {
         FornecedorDAO dao = new FornecedorDAO();
 
         if (usuarioLogado == null) {
@@ -48,10 +48,10 @@ public class FornecedorService {
             return null;
         }
 
-        return dao.buscarFornecedorPorId(id);
+        return dao.buscarPorId(id);
     }
 
-    public boolean atualizarFornecedor(Fornecedor fornecedor, Usuario usuarioLogado) throws SQLException {
+    public boolean atualizarFornecedor(Fornecedor fornecedor, Usuario usuarioLogado)  {
         FornecedorDAO dao = new FornecedorDAO();
 
         if (usuarioLogado == null) {
@@ -62,10 +62,10 @@ public class FornecedorService {
             return false;
         }
 
-        return dao.atualizarFornecedor(fornecedor);
+        return dao.atualizar(fornecedor);
     }
 
-    public boolean excluirFornecedor(Long id, Usuario usuarioLogado) throws SQLException {
+    public boolean excluirFornecedor(Long id, Usuario usuarioLogado)  {
         FornecedorDAO dao = new FornecedorDAO();
 
         if (usuarioLogado == null) {
@@ -76,6 +76,6 @@ public class FornecedorService {
             return false;
         }
 
-        return dao.excluirFornecedor(id);
+        return dao.deletar(id);
     }
 }

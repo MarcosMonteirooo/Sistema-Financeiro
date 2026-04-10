@@ -40,7 +40,7 @@ public class AtualizarPlanoDeContasServlet extends HttpServlet {
             request.setAttribute("plano", plano);
             request.getRequestDispatcher("/planodecontas/editarPlanoDeContas.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_planos");
         }
@@ -70,7 +70,7 @@ public class AtualizarPlanoDeContasServlet extends HttpServlet {
             service.atualizarPlano(plano, usuarioLogado);
             response.sendRedirect(request.getContextPath() + "/listar_planos");
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_planos");
         }

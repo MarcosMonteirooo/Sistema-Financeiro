@@ -8,28 +8,21 @@
     <persistence-unit name="meuPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class><br class="cefetrj model Conta"/></class> 
-         <class>br.cefetrj.model.Editora</class>
-         <class>br.cefetrj.model.Usuario</class>
-         <class>br.cefetrj.model.Aluno</class>
-         <class>br.cefetrj.model.Curso</class>
-         <class>br.cefetrj.model.Pessoa</class>
-         <class>br.cefetrj.model.Matricula</class>
-        <class>br.cefetrj.model.Entidade</class>
-        <!-- adicione suas outras entidades -->
+        <class>br.cefetrj.model.Usuario</class>
+        <class>br.cefetrj.model.Fornecedor</class>
+        <class>br.cefetrj.model.PlanoDeContas</class>
+        <class>br.cefetrj.model.Conta</class>
 
         <properties>
-            <!-- Conexão -->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/sistema_financeiro?useSSL=false&amp;serverTimezone=UTC"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sistema_financeiro?useSSL=false&amp;serverTimezone=America/Sao_Paulo"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value="root"/>
 
-            <!-- Hibernate -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.format_sql" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>

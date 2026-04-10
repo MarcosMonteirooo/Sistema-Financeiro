@@ -1,18 +1,13 @@
 package br.cefetrj.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario  extends GeneriEntity{
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
+   
     private String nome;
     private String email;
     private String senha;
@@ -23,7 +18,7 @@ public class Usuario {
     }
 
     public Usuario (Long id, String nome, String email, String senha, String perfil){
-        this.id = id;
+        super(id);
         this.nome = nome;
         this.email = email; 
         this.senha = senha;
@@ -61,11 +56,5 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Long getId() {
-    return id;
-}
 }

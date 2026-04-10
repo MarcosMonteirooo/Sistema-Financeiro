@@ -40,7 +40,7 @@ public class ListarPlanoDeContasServlet extends HttpServlet {
             request.setAttribute("listaPlanos", listaPlanos);
             request.getRequestDispatcher("/planodecontas/listarPlanosDeContas.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/home.jsp");
         }

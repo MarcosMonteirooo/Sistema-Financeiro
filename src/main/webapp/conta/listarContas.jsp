@@ -38,9 +38,9 @@
             %>
             <tr>
                 <td><%= conta.getId() %></td>
-                <td><%= conta.getNomeFornecedor() %></td>
+                <td><%= conta.getFornecedor() != null ? conta.getFornecedor().getNome() : "" %></td>
                 <td><%= conta.getDescricao() %></td>
-                <td><%= conta.getNomePlanoDeContas() %></td>
+                <td><%= conta.getPlanoDeContas() != null ? conta.getPlanoDeContas().getNome() : "" %></td>
                 <td>R$ <%= conta.getValor() %></td>
                 <td><%= conta.getVencimento() %></td>
                 <td>

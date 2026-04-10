@@ -38,7 +38,7 @@ public class ListarUsuarioServlet extends HttpServlet {
             request.setAttribute("listaUsuarios", listaUsuarios);
             request.getRequestDispatcher("/usuario/listarUsuarios.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao listar usuários.");
         }

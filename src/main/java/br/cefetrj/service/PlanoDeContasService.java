@@ -1,6 +1,6 @@
 package br.cefetrj.service;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import br.cefetrj.dao.PlanoDeContasDAO;
@@ -9,7 +9,7 @@ import br.cefetrj.model.Usuario;
 
 public class PlanoDeContasService {
 
-    public boolean cadastrarPlano(PlanoDeContas plano, Usuario usuarioLogado) throws SQLException {
+    public boolean cadastrarPlano(PlanoDeContas plano, Usuario usuarioLogado) {
         PlanoDeContasDAO dao = new PlanoDeContasDAO();
 
         if (usuarioLogado == null) {
@@ -20,10 +20,10 @@ public class PlanoDeContasService {
             return false;
         }
 
-        return dao.cadastrarPlano(plano);
+        return dao.salvar(plano);
     }
 
-    public List<PlanoDeContas> listarPlanos(Usuario usuarioLogado) throws SQLException {
+    public List<PlanoDeContas> listarPlanos(Usuario usuarioLogado) {
         PlanoDeContasDAO dao = new PlanoDeContasDAO();
 
         if (usuarioLogado == null) {
@@ -34,10 +34,10 @@ public class PlanoDeContasService {
             return null;
         }
 
-        return dao.listarPlanos();
+        return dao.listarTodos();
     }
 
-    public PlanoDeContas buscarPlanoPorId(Long id, Usuario usuarioLogado) throws SQLException {
+    public PlanoDeContas buscarPlanoPorId(Long id, Usuario usuarioLogado)  {
         PlanoDeContasDAO dao = new PlanoDeContasDAO();
 
         if (usuarioLogado == null) {
@@ -48,10 +48,10 @@ public class PlanoDeContasService {
             return null;
         }
 
-        return dao.buscarPlanoPorId(id);
+        return dao.buscarPorId(id);
     }
 
-    public boolean atualizarPlano(PlanoDeContas plano, Usuario usuarioLogado) throws SQLException {
+    public boolean atualizarPlano(PlanoDeContas plano, Usuario usuarioLogado)  {
         PlanoDeContasDAO dao = new PlanoDeContasDAO();
 
         if (usuarioLogado == null) {
@@ -62,10 +62,10 @@ public class PlanoDeContasService {
             return false;
         }
 
-        return dao.atualizarPlano(plano);
+        return dao.atualizar(plano);
     }
 
-    public boolean excluirPlano(Long id, Usuario usuarioLogado) throws SQLException {
+    public boolean excluirPlano(Long id, Usuario usuarioLogado) {
         PlanoDeContasDAO dao = new PlanoDeContasDAO();
 
         if (usuarioLogado == null) {
@@ -76,6 +76,6 @@ public class PlanoDeContasService {
             return false;
         }
 
-        return dao.excluirPlano(id);
+        return dao.deletar(id);
     }
 }

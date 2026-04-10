@@ -4,42 +4,37 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "conta")
-public class Conta extends EntidadeGenerica{
+public class Conta extends GeneriEntity {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private String descricao;
     private BigDecimal valor;
     private Date vencimento;
 
-    private Long fornecedorId;
-    private Long planoDeContasId;
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
+    private Fornecedor fornecedor;
 
-    private String nomeFornecedor;
-    private String nomePlanoDeContas;
+    @ManyToOne
+    @JoinColumn(name = "plano_de_contas_id")
+    private PlanoDeContas planoDeContas;
 
     public Conta() {
     }
 
     public Conta(Long id, String descricao, BigDecimal valor, Date vencimento,
-                 Long fornecedorId, Long planoDeContasId) {
+                 Fornecedor fornecedor, PlanoDeContas planoDeContas) {
         super(id);
         this.descricao = descricao;
         this.valor = valor;
         this.vencimento = vencimento;
-        this.fornecedorId = fornecedorId;
-        this.planoDeContasId = planoDeContasId;
-    }
-
-    public Long getId() {
-        return id;
+        this.fornecedor = fornecedor;
+        this.planoDeContas = planoDeContas;
     }
 
     public String getDescricao() {
@@ -54,24 +49,12 @@ public class Conta extends EntidadeGenerica{
         return vencimento;
     }
 
-    public Long getFornecedorId() {
-        return fornecedorId;
+    public Fornecedor getFornecedor() {
+        return fornecedor;
     }
 
-    public Long getPlanoDeContasId() {
-        return planoDeContasId;
-    }
-
-    public String getNomeFornecedor() {
-        return nomeFornecedor;
-    }
-
-    public String getNomePlanoDeContas() {
-        return nomePlanoDeContas;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public PlanoDeContas getPlanoDeContas() {
+        return planoDeContas;
     }
 
     public void setDescricao(String descricao) {
@@ -86,19 +69,11 @@ public class Conta extends EntidadeGenerica{
         this.vencimento = vencimento;
     }
 
-    public void setFornecedorId(Long fornecedorId) {
-        this.fornecedorId = fornecedorId;
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
-    public void setPlanoDeContasId(Long planoDeContasId) {
-        this.planoDeContasId = planoDeContasId;
-    }
-
-    public void setNomeFornecedor(String nomeFornecedor) {
-        this.nomeFornecedor = nomeFornecedor;
-    }
-
-    public void setNomePlanoDeContas(String nomePlanoDeContas) {
-        this.nomePlanoDeContas = nomePlanoDeContas;
+    public void setPlanoDeContas(PlanoDeContas planoDeContas) {
+        this.planoDeContas = planoDeContas;
     }
 }

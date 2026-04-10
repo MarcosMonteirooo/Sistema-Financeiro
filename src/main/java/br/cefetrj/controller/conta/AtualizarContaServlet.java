@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/atualizar_conta")
 public class AtualizarContaServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -32,16 +33,16 @@ public class AtualizarContaServlet extends HttpServlet {
             return;
         }
 
-        Long id = Long.parseLong(request.getParameter("id"));
-
         try {
+            Long id = Long.parseLong(request.getParameter("id"));
+
             ContaService contaService = new ContaService();
             FornecedorDAO fornecedorDAO = new FornecedorDAO();
             PlanoDeContasDAO planoDAO = new PlanoDeContasDAO();
 
             Conta conta = contaService.buscarContaPorId(id, usuarioLogado);
-            List<Fornecedor> listaFornecedores = fornecedorDAO.listarFornecedores();
-            List<PlanoDeContas> listaPlanos = planoDAO.listarPlanos();
+            List<Fornecedor> listaFornecedores = fornecedorDAO.listarTodos();
+            List<PlanoDeContas> listaPlanos = planoDAO.listarTodos();
 
             request.setAttribute("conta", conta);
             request.setAttribute("listaFornecedores", listaFornecedores);
@@ -66,25 +67,36 @@ public class AtualizarContaServlet extends HttpServlet {
             return;
         }
 
-        Long id = Long.parseLong(request.getParameter("id"));
-        String descricao = request.getParameter("descricao");
-        BigDecimal valor = new BigDecimal(request.getParameter("valor"));
-        Date vencimento = Date.valueOf(request.getParameter("vencimento"));
-        Long fornecedorId = Long.parseLong(request.getParameter("fornecedorId"));
-        Long planoDeContasId = Long.parseLong(request.getParameter("planoDeContasId"));
-
-        Conta conta = new Conta();
-        conta.setId(id);
-        conta.setDescricao(descricao);
-        conta.setValor(valor);
-        conta.setVencimento(vencimento);
-        conta.setFornecedorId(fornecedorId);
-        conta.setPlanoDeContasId(planoDeContasId);
-
-        ContaService service = new ContaService();
-
         try {
+            Long id = Long.parseLong(request.getParameter("id"));
+            String descricao = request.getParameter("descricao");
+            BigDecimal valor = new BigDecimal(request.getParameter("valor"));
+            Date vencimento = Date.valueOf(request.getParameter("vencimento"));
+            Long fornecedorId = Long.parseLong(request.getParameter("fornecedorId"));
+            Long planoDeContasId = Long.parseLong(request.getParameter("planoDeContasId"));
+
+            FornecedorDAO fornecedorDAO = new FornecedorDAO();
+            PlanoDeContasDAO planoDAO = new PlanoDeContasDAO();
+
+            Fornecedor fornecedor = fornecedorDAO.buscarPorId(fornecedorId);
+            PlanoDeContas planoDeContas = planoDAO.buscarPorId(planoDeContasId);
+
+            if (fornecedor == null || planoDeContas == null) {
+                response.sendRedirect(request.getContextPath() + "/listar_contas");
+                return;
+            }
+
+            Conta conta = new Conta();
+            conta.setId(id);
+            conta.setDescricao(descricao);
+            conta.setValor(valor);
+            conta.setVencimento(vencimento);
+            conta.setFornecedor(fornecedor);
+            conta.setPlanoDeContas(planoDeContas);
+
+            ContaService service = new ContaService();
             service.atualizarConta(conta, usuarioLogado);
+
             response.sendRedirect(request.getContextPath() + "/listar_contas");
 
         } catch (Exception e) {

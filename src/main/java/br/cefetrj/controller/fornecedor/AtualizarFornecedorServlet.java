@@ -40,7 +40,7 @@ public class AtualizarFornecedorServlet extends HttpServlet {
             request.setAttribute("fornecedor", fornecedor);
             request.getRequestDispatcher("/fornecedor/editarFornecedor.jsp").forward(request, response);
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_fornecedores");
         }
@@ -79,7 +79,7 @@ public class AtualizarFornecedorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/listar_fornecedores");
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/listar_fornecedores");
         }

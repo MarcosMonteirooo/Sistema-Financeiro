@@ -1,6 +1,6 @@
 package br.cefetrj.service;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import br.cefetrj.dao.UsuarioDAO;
@@ -8,7 +8,7 @@ import br.cefetrj.model.Usuario;
 
 public class UsuarioService {
 
-    public Usuario usuarioLogin(String email, String senha) throws SQLException {
+    public Usuario usuarioLogin(String email, String senha) {
         UsuarioDAO dao = new UsuarioDAO();
         Usuario usuario = dao.buscarPorEmail(email);
 
@@ -19,7 +19,7 @@ public class UsuarioService {
         return null;
     }
 
-    public boolean cadastrarUsuario(Usuario usuario, Usuario supervisorLogado) throws SQLException {
+    public boolean cadastrarUsuario(Usuario usuario, Usuario supervisorLogado) {
         UsuarioDAO dao = new UsuarioDAO();
 
         if (supervisorLogado == null) {
@@ -34,10 +34,10 @@ public class UsuarioService {
             return false;
         }
 
-        return dao.cadastrarUsuario(usuario);
+        return dao.salvar(usuario);
     }
 
-    public List<Usuario> listarUsuarios(Usuario supervisorLogado) throws SQLException {
+    public List<Usuario> listarUsuarios(Usuario supervisorLogado) {
         UsuarioDAO dao = new UsuarioDAO();
 
         if (supervisorLogado == null) {
@@ -48,10 +48,10 @@ public class UsuarioService {
             return null;
         }
 
-        return dao.listarUsuarios();
+        return dao.listarTodos();
     }
 
-    public Usuario buscarUsuarioPorId(Long id, Usuario supervisorLogado) throws SQLException {
+    public Usuario buscarUsuarioPorId(Long id, Usuario supervisorLogado) {
         UsuarioDAO dao = new UsuarioDAO();
 
         if (supervisorLogado == null) {
@@ -65,7 +65,7 @@ public class UsuarioService {
         return dao.buscarPorId(id);
     }
 
-    public boolean atualizarUsuario(Usuario usuario, Usuario supervisorLogado) throws SQLException {
+    public boolean atualizarUsuario(Usuario usuario, Usuario supervisorLogado) {
         UsuarioDAO dao = new UsuarioDAO();
 
         if (supervisorLogado == null) {
@@ -76,10 +76,10 @@ public class UsuarioService {
             return false;
         }
 
-        return dao.atualizarUsuario(usuario);
+        return dao.atualizar(usuario);
     }
 
-    public boolean excluirUsuario(Long id, Usuario supervisorLogado) throws SQLException {
+    public boolean excluirUsuario(Long id, Usuario supervisorLogado) {
         UsuarioDAO dao = new UsuarioDAO();
 
         if (supervisorLogado == null) {
@@ -90,6 +90,6 @@ public class UsuarioService {
             return false;
         }
 
-        return dao.excluirUsuario(id);
+        return dao.deletar(id);
     }
 }
